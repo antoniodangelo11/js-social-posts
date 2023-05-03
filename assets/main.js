@@ -103,16 +103,19 @@ const eleCounters = document.querySelectorAll(".js-likes-counter");
 
 // Funzione per i bottoni
 eleLikeButtons.forEach((eleLike, i) => {
+    
     eleLike.addEventListener("click", function () {
         const eleCounter = eleCounters[i];
     
         if (eleLike.classList.contains("like-button--liked")) {
           posts[i].likes -= 1;
+          likedPosts.pop(`${posts[i].id}`);
         } else {
           posts[i].likes += 1;
-          likedPosts.push(elePost);
-          console.log("liked", likedPosts);
+          likedPosts.push(`${posts[i].id}`);
         }
+        
+        console.log(likedPosts);
     
         eleLike.classList.toggle("like-button--liked");
         eleCounter.innerHTML = `${posts[i].likes}`;
