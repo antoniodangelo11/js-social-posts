@@ -1,3 +1,4 @@
+// Array dei post
 const posts = [
     {
         "id": 1,
@@ -56,8 +57,10 @@ const posts = [
     }
 ];
 
-const elePost = document.querySelector('.posts-list');
+// Array vuoto da riempire con i like cliccati
+const likedPosts = [];
 
+const elePost = document.querySelector('.posts-list');
 
 posts.forEach((element) => {
   elePost.innerHTML += `<div class="post">
@@ -68,7 +71,7 @@ posts.forEach((element) => {
         </div> 
          <div class="post-meta__data">
             <div class="post-meta__author">${element.author.name}</div>
-            <div class="post-meta__time"${element.created}</div>
+            <div class="post-meta__time">${element.created}</div>
         </div>                    
     </div>
 </div>
@@ -105,6 +108,8 @@ for (let i = 0; i < eleLikeButtons.length; i++) {
       posts[i].likes -= 1;
     } else {
       posts[i].likes += 1;
+      likedPosts.push(elePost);
+      console.log("liked", likedPosts);
     }
 
     eleLike.classList.toggle("like-button--liked");
