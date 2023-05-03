@@ -64,16 +64,17 @@ const elePost = document.querySelector('.posts-list');
 
 
 posts.forEach((element) => {
-  const dataInvertita = convertiData(element.created);
+  const dateReverse = reverseDate(element.created);
+  const nullImage = getInitials(element.author.name);
   elePost.innerHTML += `<div class="post">
 <div class="post__header">
     <div class="post-meta">                    
         <div class="post-meta__icon">
-            <img class="profile-pic" src="${element.author.image}" alt="">                    
+            <img class="profile-pic" src="${element.author.image || 'https://via.placeholder.com/150x150.png?text=' + nullImage}" alt="">                    
         </div> 
          <div class="post-meta__data">
             <div class="post-meta__author">${element.author.name}</div>
-            <div class="post-meta__time">${dataInvertita}</div>
+            <div class="post-meta__time">${dateReverse}</div>
         </div>                    
     </div>
 </div>
@@ -100,28 +101,31 @@ posts.forEach((element) => {
 const eleLikeButtons = document.querySelectorAll(".like-button");
 const eleCounters = document.querySelectorAll(".js-likes-counter");
 
-for (let i = 0; i < eleLikeButtons.length; i++) {
-  const eleLike = eleLikeButtons[i];
-
-  eleLike.addEventListener("click", function () {
-    const eleCounter = eleCounters[i];
-
-    if (eleLike.classList.contains("like-button--liked")) {
-      posts[i].likes -= 1;
-    } else {
-      posts[i].likes += 1;
-      likedPosts.push(elePost);
-      console.log("liked", likedPosts);
-    }
-
-    eleLike.classList.toggle("like-button--liked");
-    eleCounter.innerHTML = `${posts[i].likes}`;
-  });
-}
-
+// Funzione per i bottoni
+eleLikeButtons.forEach((eleLike, i) => {
+    eleLike.addEventListener("click", function () {
+        const eleCounter = eleCounters[i];
+    
+        if (eleLike.classList.contains("like-button--liked")) {
+          posts[i].likes -= 1;
+        } else {
+          posts[i].likes += 1;
+          likedPosts.push(elePost);
+          console.log("liked", likedPosts);
+        }
+    
+        eleLike.classList.toggle("like-button--liked");
+        eleCounter.innerHTML = `${posts[i].likes}`;
+    });
+});
 
 // Funzione per convertire la data
-function convertiData(data) {
-    const partiData = data.split('-');
-    return `${partiData[2]}/${partiData[1]}/${partiData[0]}`;
+function reverseDate(date) {
+    const partDate = date.split('-');
+    return `${partDate[2]}-${partDate[1]}-${partDate[0]}`;
+}
+
+// Funzione per aggiungere le iniziali ad img mancante
+function getInitials(name) {
+    return name.split(' ').map(word => word.charAt(0)).join('').toUpperCase();
 }
