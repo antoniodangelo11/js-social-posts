@@ -61,37 +61,38 @@ const posts = [
 const likedPosts = [];
 
 const elePost = document.querySelector('.posts-list');
+elePost.innerHTML = '';
 
-
-posts.forEach((element) => {
-  const dateReverse = reverseDate(element.created);
-  const nullImage = getInitials(element.author.name);
+// Funzione di render dei post
+posts.forEach((objPost) => {
+  const dateReverse = reverseDate(objPost.created);
+  const nullImage = getInitials(objPost.author.name);
   elePost.innerHTML += `<div class="post">
 <div class="post__header">
     <div class="post-meta">                    
         <div class="post-meta__icon">
-            <img class="profile-pic" src="${element.author.image || 'https://via.placeholder.com/150x150.png?text=' + nullImage}" alt="">                    
+            <img class="profile-pic" src="${objPost.author.image || 'https://via.placeholder.com/150x150.png?text=' + nullImage}" alt="">                    
         </div> 
          <div class="post-meta__data">
-            <div class="post-meta__author">${element.author.name}</div>
+            <div class="post-meta__author">${objPost.author.name}</div>
             <div class="post-meta__time">${dateReverse}</div>
         </div>                    
     </div>
 </div>
-<div class="post__text">${element.content}</div>
+<div class="post__text">${objPost.content}</div>
 <div class="post__image">
-    <img src="${element.media}" alt="">
+    <img src="${objPost.media}" alt="">
 </div>
 <div class="post__footer">
     <div class="likes js-likes">
         <div class="likes__cta">
-            <button class="like-button  js-like-button" data-postid="${element.id}">
+            <button class="like-button  js-like-button" data-postid="${objPost.id}">
                 <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                 <span class="like-button__label">Mi Piace</span>
             </button>
         </div>
         <div class="likes__counter">
-            Piace a <b id="like-counter-1" class="js-likes-counter">${element.likes}</b> persone
+            Piace a <b id="like-counter-1" class="js-likes-counter">${objPost.likes}</b> persone
         </div>
     </div> 
 </div>            
